@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AleatorioController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    main { color: darkblue; }
+</style>
+
+<main class="example-wrapper">
+    <h1>Hola {{ controller_name }}! ✅</h1>
+
+    Te voy a poner un aleatorio. Estos son los archivos:
+    <ul>
+        <li>Capa Controlador: <code><a href="{{ '/var/www/html/symfony6-soltel/src/Controller/AleatorioController.php'|file_link(0) }}">src/Controller/AleatorioController.php</a></code></li>
+        <li>Capa Vista: <code><a href="{{ '/var/www/html/symfony6-soltel/templates/aleatorio/index.html.twig'|file_link(0) }}">templates/aleatorio/index.html.twig</a></code></li>
+    </ul>
+    <h3>Fristro!!! Tu aleatorio es: {{ numeroAleatorio }} </h3>
+</main>
+{% endblock %}
