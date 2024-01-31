@@ -1,0 +1,10 @@
+# Para poner una ruta. OJO, ponerla al COMPLETO!
+app_aleatorio2:
+    path: /num-aleatorios/num2
+    controller: App\Controller\AleatorioController::index3
+    methods: 
+
+app_aleatorio3:
+    path: /num-aleatorios/num3
+    controller: App\Controller\AleatorioController::index3
+    methods: 
