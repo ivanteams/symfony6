@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AulasRepository::class)]
+#[ORM\Table(name: "aulas", indexes: [new ORM\Index(name: "idx_docente", columns: ["docente"])])]
 class Aulas
 {
 
@@ -17,7 +18,7 @@ class Aulas
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $capacidad = null;
 
-    #[ORM\Index]
+
     #[ORM\Column(length: 45)]
     private ?string $docente = null;
 
