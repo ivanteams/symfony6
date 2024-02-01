@@ -30,8 +30,8 @@ class Alumnos
     #[ORM\ManyToOne(inversedBy: 'alumnos')]
     // OJO! Hay que poner el campo referenciado en la tabla principal
     // Esto no vale: #[ORM\JoinColumn(nullable: false)] -> Mira la id de la otra tabla
-    #[ORM\JoinColumn(name: "numAula", referencedColumnName: "numAula", nullable: false)]
-    private ?Aulas $numAula = null;
+    #[ORM\JoinColumn(name: "aulas_num_aula", referencedColumnName: "num_aula", nullable: false)]
+    private ?Aulas $aulas_num_aula = null;
 
     public function getNif(): ?string
     {
@@ -93,14 +93,14 @@ class Alumnos
         return $this;
     }
 
-    public function getNumAula(): ?Aulas
+    public function getAulasNumAula(): ?Aulas
     {
-        return $this->numAula;
+        return $this->aulas_num_aula;
     }
 
-    public function setNumAula(?Aulas $numAula): static
+    public function setAulasNumAula(?Aulas $aulas_numAula): static
     {
-        $this->numAula = $numAula;
+        $this->aulas_num_aula = $aulas_numAula;
 
         return $this;
     }

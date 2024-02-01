@@ -15,7 +15,7 @@ class Aulas
 
     #[ORM\Id]
     #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $numAula = null;
+    private ?int $num_aula = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $capacidad = null;
@@ -27,7 +27,7 @@ class Aulas
     #[ORM\Column]
     private ?bool $hardware = null;
 
-    #[ORM\OneToMany(mappedBy: 'numAula', targetEntity: Alumnos::class)]
+    #[ORM\OneToMany(mappedBy: 'aulas_numAula', targetEntity: Alumnos::class)]
     private Collection $alumnos;
 
     public function __construct()
@@ -35,15 +35,14 @@ class Aulas
         $this->alumnos = new ArrayCollection();
     }
 
-
     public function getNumAula(): ?int
     {
-        return $this->numAula;
+        return $this->num_aula;
     }
 
     public function setNumAula(int $numAula): static
     {
-        $this->numAula = $numAula;
+        $this->num_aula = $numAula;
 
         return $this;
     }
@@ -96,7 +95,7 @@ class Aulas
     {
         if (!$this->alumnos->contains($alumno)) {
             $this->alumnos->add($alumno);
-            $alumno->setNumAula($this);
+            $alumno->setAulasNumAula($this);
         }
 
         return $this;
@@ -106,17 +105,11 @@ class Aulas
     {
         if ($this->alumnos->removeElement($alumno)) {
             // set the owning side to null (unless already changed)
-            if ($alumno->getNumAula() === $this) {
-                $alumno->setNumAula(null);
+            if ($alumno->getAulasNumAula() === $this) {
+                $alumno->setAulasNumAula(null);
             }
         }
 
         return $this;
     }
-
-
-
-
-
-
 }
