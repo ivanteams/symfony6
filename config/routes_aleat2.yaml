@@ -1,9 +1,9 @@
-app_aleatorio4:
-    path: /num-aleatorios/num4
-    controller: App\Controller\AleatorioController::index3
-    methods: 
-
 app_hola:
-    path: /hola2/{nombre}/{apellido}
+    path: /hola/{nombre}/{apellido}
     controller: App\Controller\HolaController::index
-    methods: GET
+    methods: GET 
+
+app_suma:
+    path: /suma/{num1}/{num2}
+    controller: App\Controller\HolaController::suma
+    methods: GET 

@@ -7,9 +7,10 @@ controllers:
 # Corrección: Especificar cada importación con la clave 'resource'
 extra_routes_1:
     resource: routes_aleat1.yaml
+    prefix:   /num-aleatorios
 extra_routes_2:
     resource: routes_aleat2.yaml
-
+    prefix:   /otros
 
 # xml_routes:
 #    resource: routes.xml

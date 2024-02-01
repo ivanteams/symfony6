@@ -4,9 +4,8 @@
         xsi:schemaLocation="http://symfony.com/schema/routing
             https://symfony.com/schema/routing/routing-1.0.xsd">
  
-    <route id="app_aleatorio6" path="/aleatorios/num6" 
+    <route id="app_aleatorio6" path="/num-aleatorios/num6" 
     controller="App\Controller\AleatorioController::index3" 
     methods="GET">
     </route>
- 
 </routes>
