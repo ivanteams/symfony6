@@ -27,6 +27,12 @@ class Alumnos
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fechanac = null;
 
+    #[ORM\ManyToOne(inversedBy: 'alumnos')]
+    // OJO! Hay que poner el campo referenciado en la tabla principal
+    // Esto no vale: #[ORM\JoinColumn(nullable: false)] -> Mira la id de la otra tabla
+    #[ORM\JoinColumn(name: "numAula", referencedColumnName: "numAula", nullable: false)]
+    private ?Aulas $numAula = null;
+
     public function getNif(): ?string
     {
         return $this->nif;
@@ -83,6 +89,18 @@ class Alumnos
     public function setFechanac(\DateTimeInterface $fechanac): static
     {
         $this->fechanac = $fechanac;
+
+        return $this;
+    }
+
+    public function getNumAula(): ?Aulas
+    {
+        return $this->numAula;
+    }
+
+    public function setNumAula(?Aulas $numAula): static
+    {
+        $this->numAula = $numAula;
 
         return $this;
     }

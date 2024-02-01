@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AulasRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,6 +26,14 @@ class Aulas
 
     #[ORM\Column]
     private ?bool $hardware = null;
+
+    #[ORM\OneToMany(mappedBy: 'numAula', targetEntity: Alumnos::class)]
+    private Collection $alumnos;
+
+    public function __construct()
+    {
+        $this->alumnos = new ArrayCollection();
+    }
 
 
     public function getNumAula(): ?int
@@ -70,6 +80,36 @@ class Aulas
     public function setHardware(bool $hardware): static
     {
         $this->hardware = $hardware;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Alumnos>
+     */
+    public function getAlumnos(): Collection
+    {
+        return $this->alumnos;
+    }
+
+    public function addAlumno(Alumnos $alumno): static
+    {
+        if (!$this->alumnos->contains($alumno)) {
+            $this->alumnos->add($alumno);
+            $alumno->setNumAula($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlumno(Alumnos $alumno): static
+    {
+        if ($this->alumnos->removeElement($alumno)) {
+            // set the owning side to null (unless already changed)
+            if ($alumno->getNumAula() === $this) {
+                $alumno->setNumAula(null);
+            }
+        }
 
         return $this;
     }
