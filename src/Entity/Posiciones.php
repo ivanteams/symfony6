@@ -18,7 +18,7 @@ class Posiciones
     #[ORM\Column(length: 45)]
     private ?string $posicion = null;
 
-    #[ORM\OneToMany(mappedBy: 'posiciones_id', targetEntity: Jugadores::class)]
+    #[ORM\OneToMany(mappedBy: 'posiciones', targetEntity: Jugadores::class)]
     private Collection $jugadores;
 
     public function __construct()
@@ -55,7 +55,7 @@ class Posiciones
     {
         if (!$this->jugadores->contains($jugadore)) {
             $this->jugadores->add($jugadore);
-            $jugadore->setPosicionesId($this);
+            $jugadore->setPosiciones($this);
         }
 
         return $this;
@@ -65,11 +65,12 @@ class Posiciones
     {
         if ($this->jugadores->removeElement($jugadore)) {
             // set the owning side to null (unless already changed)
-            if ($jugadore->getPosicionesId() === $this) {
-                $jugadore->setPosicionesId(null);
+            if ($jugadore->getPosiciones() === $this) {
+                $jugadore->setPosiciones(null);
             }
         }
 
         return $this;
     }
+
 }

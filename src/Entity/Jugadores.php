@@ -34,7 +34,6 @@ class Jugadores
     #[ORM\JoinColumn(nullable: false)]
     private ?Posiciones $posiciones = null;
 
-
     public function getNifNie(): ?string
     {
         return $this->nif_nie;
@@ -107,15 +106,16 @@ class Jugadores
         return $this;
     }
 
-    public function getPosicionesId(): ?Posiciones
+    public function getPosiciones(): ?Posiciones
     {
         return $this->posiciones;
     }
 
-    public function setPosicionesId(?Posiciones $posiciones_id): static
+    public function setPosiciones(?Posiciones $posiciones): static
     {
-        $this->posiciones = $posiciones_id;
+        $this->posiciones = $posiciones;
 
         return $this;
     }
+
 }
