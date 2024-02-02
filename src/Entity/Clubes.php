@@ -35,10 +35,14 @@ class Clubes
     #[ORM\OneToMany(mappedBy: 'clubes_cif', targetEntity: Jugadores::class)]
     private Collection $jugadores;
 
+    #[ORM\OneToMany(mappedBy: 'clubes_cif_local', targetEntity: Partidos::class)]
+    private Collection $partidos;
+
     public function __construct()
     {
         $this->entrenadores = new ArrayCollection();
         $this->jugadores = new ArrayCollection();
+        $this->partidos = new ArrayCollection();
     }
 
 
@@ -156,6 +160,36 @@ class Clubes
             // set the owning side to null (unless already changed)
             if ($jugadore->getClubesCif() === $this) {
                 $jugadore->setClubesCif(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Partidos>
+     */
+    public function getPartidos(): Collection
+    {
+        return $this->partidos;
+    }
+
+    public function addPartido(Partidos $partido): static
+    {
+        if (!$this->partidos->contains($partido)) {
+            $this->partidos->add($partido);
+            $partido->setClubesCifLocal($this);
+        }
+
+        return $this;
+    }
+
+    public function removePartido(Partidos $partido): static
+    {
+        if ($this->partidos->removeElement($partido)) {
+            // set the owning side to null (unless already changed)
+            if ($partido->getClubesCifLocal() === $this) {
+                $partido->setClubesCifLocal(null);
             }
         }
 
