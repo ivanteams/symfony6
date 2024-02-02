@@ -32,9 +32,13 @@ class Clubes
     #[ORM\OneToMany(mappedBy: 'clubes_cif', targetEntity: Entrenadores::class)]
     private Collection $entrenadores;
 
+    #[ORM\OneToMany(mappedBy: 'clubes_cif', targetEntity: Jugadores::class)]
+    private Collection $jugadores;
+
     public function __construct()
     {
         $this->entrenadores = new ArrayCollection();
+        $this->jugadores = new ArrayCollection();
     }
 
 
@@ -122,6 +126,36 @@ class Clubes
             // set the owning side to null (unless already changed)
             if ($entrenadore->getClubesCif() === $this) {
                 $entrenadore->setClubesCif(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Jugadores>
+     */
+    public function getJugadores(): Collection
+    {
+        return $this->jugadores;
+    }
+
+    public function addJugadore(Jugadores $jugadore): static
+    {
+        if (!$this->jugadores->contains($jugadore)) {
+            $this->jugadores->add($jugadore);
+            $jugadore->setClubesCif($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJugadore(Jugadores $jugadore): static
+    {
+        if ($this->jugadores->removeElement($jugadore)) {
+            // set the owning side to null (unless already changed)
+            if ($jugadore->getClubesCif() === $this) {
+                $jugadore->setClubesCif(null);
             }
         }
 
