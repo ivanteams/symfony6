@@ -26,6 +26,10 @@ class Entrenadores
     #[ORM\Column(type: Types::DECIMAL, precision: 8, scale: 2, nullable: true)]
     private ?string $ficha = null;
 
+    #[ORM\ManyToOne(inversedBy: 'entrenadores')]
+    #[ORM\JoinColumn(name: "clubes_cif", referencedColumnName: "cif", nullable: false)]
+    private ?Clubes $clubes_cif = null;
+
 
     public function getNifNie(): ?string
     {
@@ -83,6 +87,18 @@ class Entrenadores
     public function setFicha(?string $ficha): static
     {
         $this->ficha = $ficha;
+
+        return $this;
+    }
+
+    public function getClubesCif(): ?Clubes
+    {
+        return $this->clubes_cif;
+    }
+
+    public function setClubesCif(?Clubes $clubes_cif): static
+    {
+        $this->clubes_cif = $clubes_cif;
 
         return $this;
     }

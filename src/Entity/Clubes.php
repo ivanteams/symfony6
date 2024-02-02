@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClubesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,6 +28,14 @@ class Clubes
 
     #[ORM\Column(length: 45)]
     private ?string $estadio = null;
+
+    #[ORM\OneToMany(mappedBy: 'clubes_cif', targetEntity: Entrenadores::class)]
+    private Collection $entrenadores;
+
+    public function __construct()
+    {
+        $this->entrenadores = new ArrayCollection();
+    }
 
 
     public function getCif(): ?string
@@ -84,6 +94,36 @@ class Clubes
     public function setEstadio(string $estadio): static
     {
         $this->estadio = $estadio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Entrenadores>
+     */
+    public function getEntrenadores(): Collection
+    {
+        return $this->entrenadores;
+    }
+
+    public function addEntrenadore(Entrenadores $entrenadore): static
+    {
+        if (!$this->entrenadores->contains($entrenadore)) {
+            $this->entrenadores->add($entrenadore);
+            $entrenadore->setClubesCif($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntrenadore(Entrenadores $entrenadore): static
+    {
+        if ($this->entrenadores->removeElement($entrenadore)) {
+            // set the owning side to null (unless already changed)
+            if ($entrenadore->getClubesCif() === $this) {
+                $entrenadore->setClubesCif(null);
+            }
+        }
 
         return $this;
     }
