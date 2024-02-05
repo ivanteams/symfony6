@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 // Importamos clases abstractas de gestión BBDD
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 #[Route('/posiciones', name: 'app_posiciones')]
