@@ -22,14 +22,14 @@ class ClubesController extends AbstractController
                 "cif" => "12345678A",
                 "nombre" => "Real Betis",
                 "fundacion" => "1907-09-12",
-                "num_socios" => 200,
+                "num_socios" => 65000,
                 "estadio" => "Benito Villamarín"
             ),
             "sevilla" => array(
                 "cif" => "23456789B",
                 "nombre" => "Sevilla FC",
                 "fundacion" => "1905-10-15",
-                "num_socios" => 450,
+                "num_socios" => 45000,
                 "estadio" => "Sánchez Pizjuan"
             )
         );
@@ -45,7 +45,7 @@ class ClubesController extends AbstractController
                 $club->setFundacion($fundacion);
 
                 $club->setNumSocios($registro['num_socios']);
-                $club->setEstadio($registro['cif']);
+                $club->setEstadio($registro['estadio']);
 
                 // Hago el insert, persistiendo el registro
                 $gestorEntidades->persist($club);
@@ -55,6 +55,6 @@ class ClubesController extends AbstractController
             }
         }
 
-        return new Response("<h1>Clubes Insertados: </h1>");
+        return new Response("<h1>Clubes Insertados. </h1>");
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240202125907 extends AbstractMigration
+final class Version20240206091040 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -22,7 +22,7 @@ final class Version20240202125907 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE alumnos (nif VARCHAR(9) NOT NULL, aulas_num_aula SMALLINT NOT NULL, nombre VARCHAR(45) NOT NULL, edad SMALLINT NOT NULL, sexo TINYINT(1) NOT NULL, fechanac DATE NOT NULL, INDEX IDX_5EC5A6AB3C604661 (aulas_num_aula), PRIMARY KEY(nif)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE aulas (num_aula SMALLINT NOT NULL, capacidad SMALLINT NOT NULL, docente VARCHAR(45) NOT NULL, hardware TINYINT(1) NOT NULL, PRIMARY KEY(num_aula)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE clubes (cif VARCHAR(9) NOT NULL, nombre VARCHAR(45) NOT NULL, fundacion DATE NOT NULL, num_socios SMALLINT DEFAULT NULL, estadio VARCHAR(45) NOT NULL, PRIMARY KEY(cif)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE clubes (cif VARCHAR(9) NOT NULL, nombre VARCHAR(45) NOT NULL, fundacion DATE NOT NULL, num_socios INT DEFAULT NULL, estadio VARCHAR(45) NOT NULL, PRIMARY KEY(cif)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE entrenadores (nif_nie VARCHAR(9) NOT NULL, clubes_cif VARCHAR(9) NOT NULL, nombre VARCHAR(45) NOT NULL, edad SMALLINT NOT NULL, destituido TINYINT(1) DEFAULT NULL, ficha NUMERIC(8, 2) DEFAULT NULL, INDEX IDX_E15FDEE2B4CE1D75 (clubes_cif), PRIMARY KEY(nif_nie)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE jugadores (nif_nie VARCHAR(9) NOT NULL, clubes_cif VARCHAR(9) NOT NULL, posiciones_id INT NOT NULL, nombre VARCHAR(45) NOT NULL, edad SMALLINT NOT NULL, cedido TINYINT(1) DEFAULT NULL, ficha NUMERIC(8, 2) DEFAULT NULL, INDEX IDX_CF491B76B4CE1D75 (clubes_cif), INDEX IDX_CF491B76F1666D8D (posiciones_id), PRIMARY KEY(nif_nie)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE partidos (clubes_cif_local VARCHAR(9) NOT NULL, clubes_cif_visitante VARCHAR(9) NOT NULL, fecha DATE NOT NULL, goles_local SMALLINT NOT NULL, goles_visitante SMALLINT NOT NULL, arbitro VARCHAR(45) NOT NULL, INDEX IDX_8C926FF696B464CC (clubes_cif_local), INDEX IDX_8C926FF65800EC72 (clubes_cif_visitante), PRIMARY KEY(clubes_cif_local, clubes_cif_visitante)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

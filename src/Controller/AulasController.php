@@ -79,6 +79,6 @@ class AulasController extends AbstractController
         }
 
 
-        return new Response("<h1>Registros Insertados: </h1>");
+        return new Response("<h1>Registros Insertados. </h1>");
     }
 }

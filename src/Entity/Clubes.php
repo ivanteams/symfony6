@@ -23,7 +23,7 @@ class Clubes
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fundacion = null;
 
-    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $num_socios = null;
 
     #[ORM\Column(length: 45)]
