@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 #[Route('/alumnos', name: 'app_alumnos')]
 class AlumnosController extends AbstractController
 {
-    #[Route('/insertarAlumnos', name: 'app_alumnos')]
+    #[Route('/insertarAlumnos', name: 'app_alumnos_insertar1')]
     public function index(EntityManagerInterface $gestorEntidades): Response
     {
         // endpoint de ejemplo: http://127.0.0.1:8000/alumnos/insertarAlumnos
@@ -80,6 +80,42 @@ class AlumnosController extends AbstractController
             $gestorEntidades->persist($alumno);
             $gestorEntidades->flush();
         }
+
+        return new Response("<h1>Insertado Alumnado</h1>");
+    }
+
+
+    #[Route('/insertar/{nif}/{nombre}/{edad}/{sexo}/{fechanac}/{numAula}', name: 'app_insertar2')]
+    public function meteAlumno(
+        String $nif,
+        String $nombre,
+        int $edad,
+        bool $sexo,
+        String $fechanac,
+        int $numAula,
+        EntityManagerInterface $gestorEntidades
+    ): Response {
+        // endpoint de ejemplo: 
+        // http://127.0.0.1:8000/alumnos/insertar/45612378K/Juan Carlos/22/0/2001-09-16/23
+
+        $alumno = new Alumnos();
+        $alumno->setNif($nif);
+        $alumno->setNombre($nombre);
+        $alumno->setEdad($edad);
+        $alumno->setSexo($sexo);
+
+        $fecha = new DateTime($fechanac);
+        $alumno->setFechanac($fecha);
+
+
+        $aula = $gestorEntidades->getRepository(Aulas::class)
+            ->findOneBy(["num_aula" => $numAula]);
+
+        $alumno->setAulasNumAula($aula);
+
+        $gestorEntidades->persist($alumno);
+        $gestorEntidades->flush();
+
 
         return new Response("<h1>Insertado Alumnado</h1>");
     }
