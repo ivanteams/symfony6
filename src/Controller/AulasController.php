@@ -81,4 +81,20 @@ class AulasController extends AbstractController
 
         return new Response("<h1>Registros Insertados. </h1>");
     }
+
+    #[Route('/consultarAulas', name: 'app_aulas_consultarAulas')]
+    public function consultarAulas(ManagerRegistry $gestorFilas): Response
+    {
+        // endpoint de ejemplo: http://127.0.0.1:8000/aulas/consultarAulas
+        // Saco el gestor de entidades a partir del gestor de Filas (mas genérico)
+        $gestorEntidades = $gestorFilas->getManager();
+        // Desde el gestor de entidades, saco el repositorio de mi clase
+        $repoAulas =  $gestorEntidades->getRepository(Aulas::class);
+        $filasAulas = $repoAulas->findAll();
+
+        return $this->render('aulas/index.html.twig', [
+            'controller_name' => 'AulasController',
+            'tabla' => $filasAulas,
+        ]);
+    }
 }
