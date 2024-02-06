@@ -36,7 +36,28 @@ class AlumnosController extends AbstractController
             )
         );
 
-        foreach ($alumnos as $registro) {
+        $otrosAlumnos = array(
+            "alu1" => array(
+                "nif" => "77778888G",
+                "nombre" => "José Antonio",
+                "edad" => 30,
+                "sexo" => 1,
+                "fechanac" => "1994-01-10",
+                "num_aula" => 22
+            ),
+            "alu2" => array(
+                "nif" => "99996666H",
+                "nombre" => "Jairo",
+                "edad" => 28,
+                "sexo" => 1,
+                "fechanac" => "1992-02-02",
+                "num_aula" => 22
+            )
+        );
+
+
+
+        foreach ($otrosAlumnos as $registro) {
             $alumno = new Alumnos();
             $alumno->setNif($registro['nif']);
             $alumno->setNombre($registro['nombre']);
@@ -46,8 +67,14 @@ class AlumnosController extends AbstractController
             $fecha = new DateTime($registro['fechanac']);
             $alumno->setFechanac($fecha);
 
+            /*
             $aula = $gestorEntidades->getRepository(Aulas::class)
-                ->findOneBy(["num_aula" => $registro['num_aula']]);
+                ->findOneBy(["num_aula" => $registro['num_aula']]); */
+
+            $paramBusqueda = ["num_aula" => $registro['num_aula']];
+            $repoAulas =  $gestorEntidades->getRepository(Aulas::class);
+            $aula = $repoAulas->findOneBy($paramBusqueda);
+
             $alumno->setAulasNumAula($aula);
 
             $gestorEntidades->persist($alumno);
