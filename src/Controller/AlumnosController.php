@@ -42,7 +42,7 @@ class AlumnosController extends AbstractController
                 "nif" => "77778888G",
                 "nombre" => "José Antonio",
                 "edad" => 30,
-                "sexo" => 1,
+                "sexo" => 0,
                 "fechanac" => "1994-01-10",
                 "num_aula" => 22
             ),
@@ -50,7 +50,7 @@ class AlumnosController extends AbstractController
                 "nif" => "99996666H",
                 "nombre" => "Jairo",
                 "edad" => 28,
-                "sexo" => 1,
+                "sexo" => 0,
                 "fechanac" => "1992-02-02",
                 "num_aula" => 22
             )
