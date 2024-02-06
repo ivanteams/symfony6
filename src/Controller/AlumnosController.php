@@ -2,15 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Alumnos;
+use App\Entity\Aulas;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/alumnos', name: 'app_alumnos')]
 class AlumnosController extends AbstractController
 {
     #[Route('/insertarAlumnos', name: 'app_alumnos')]
-    public function index(): Response
+    public function index(EntityManagerInterface $gestorEntidades): Response
     {
         // endpoint de ejemplo: http://127.0.0.1:8000/alumnos/insertarAlumnos
         $alumnos = array(
@@ -31,6 +35,24 @@ class AlumnosController extends AbstractController
                 "num_aula" => 23
             )
         );
+
+        foreach ($alumnos as $registro) {
+            $alumno = new Alumnos();
+            $alumno->setNif($registro['nif']);
+            $alumno->setNombre($registro['nombre']);
+            $alumno->setEdad($registro['edad']);
+            $alumno->setSexo($registro['sexo']);
+
+            $fecha = new DateTime($registro['fechanac']);
+            $alumno->setFechanac($fecha);
+
+            $aula = $gestorEntidades->getRepository(Aulas::class)
+                ->findOneBy(["num_aula" => $registro['num_aula']]);
+            $alumno->setAulasNumAula($aula);
+
+            $gestorEntidades->persist($alumno);
+            $gestorEntidades->flush();
+        }
 
         return new Response("<h1>Insertado Alumnado</h1>");
     }
