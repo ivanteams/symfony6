@@ -93,7 +93,7 @@ class AulasController extends AbstractController
         $filasAulas = $repoAulas->findAll();
 
         return $this->render('aulas/index.html.twig', [
-            'controller_name' => 'Contralador Aulas',
+            'controller_name' => 'Controlador Aulas',
             'tabla' => $filasAulas,
         ]);
     }

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/alumnos', name: 'app_alumnos')]
 class AlumnosController extends AbstractController
@@ -118,5 +119,30 @@ class AlumnosController extends AbstractController
 
 
         return new Response("<h1>Insertado Alumnado</h1>");
+    }
+
+
+    #[Route('/verAlumnos/{aula}/{sexo}', name: 'app_alumnos_ver_alumnos')]
+    public function verAlumnos(
+        EntityManagerInterface $gestorEntidades,
+        int $aula,
+        bool $sexo
+    ): JsonResponse {
+        // Ejemplo endpoint: http://127.0.0.1:8000/alumnos/verAlumnos/23/1
+        $repoAlumnos = $gestorEntidades->getRepository(Alumnos::class);
+        $param = ['aulas_num_aula' => $aula, 'sexo' => $sexo];
+        $paramOrdenacion = ['nombre' => 'ASC'];
+        $filasAlumnos = $repoAlumnos->findBy($param, $paramOrdenacion);
+
+        $json = array();
+        foreach ($filasAlumnos as $alumno) {
+            $json[] = array(
+                'nif' => $alumno->getNif(),
+                'nombre' => $alumno->getNombre(),
+                'edad' => $alumno->getEdad()
+            );
+        }
+
+        return new JsonResponse($json);
     }
 }
