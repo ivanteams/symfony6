@@ -157,6 +157,7 @@ class AlumnosController extends AbstractController
      */
     #[Route('/consultarAlumnos', name: 'app_alumnos_consultar_alumnos')]
     public function consultarAlumnos(ManagerRegistry $gestorDoctrine): Response{
+        // Ejemplo endpoint: http://127.0.0.1:8000/alumnos/consultarAlumnos
         $conexion = $gestorDoctrine->getConnection();
         $alumnos = $conexion
             ->prepare("SELECT nif, nombre, sexo, num_aula AS numaula, docente, fechanac
@@ -185,7 +186,7 @@ class AlumnosController extends AbstractController
      */
     #[Route('/consultarAlumnosAulas', name: 'app_alumnos_consultar_alumnos_aulas')]
     public function consultarAlumnosAulas(AlumnosRepository $repoAlumno): Response{
-
+        // Ejemplo endpoint: http://127.0.0.1:8000/alumnos/consultarAlumnosAulas
         $alumnos = $repoAlumno->unirAlumnosAulas();
 
         return $this->render('alumnos/index.html.twig', [
@@ -194,10 +195,11 @@ class AlumnosController extends AbstractController
         ]);
     }
 
-    #[Route('/consultarAlumnas', name: 'app_alumnos_consultar_alumnas')]
-    public function consultarAlumnas(AlumnosRepository $repoAlumno): Response{
+    #[Route('/consultarAlumnas/{fecha}', name: 'app_alumnos_consultar_alumnas')]
+    public function consultarAlumnas(AlumnosRepository $repoAlumno, String $fecha): Response{
+        // Ejemplo endpoint: http://127.0.0.1:8000/alumnos/consultarAlumnas/1990-02-07
+        $alumnas = $repoAlumno->consultarAlumnas($fecha);
 
-        $alumnas = null;
         return $this->render('alumnos/index.html.twig', [
             'controller_name' => 'Controlador Alumnos',
             'RegistrosAlumnas' => $alumnas,

@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Alumnos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use DateTime;
+
 
 /**
  * @extends ServiceEntityRepository<Alumnos>
@@ -60,5 +62,29 @@ class AlumnosRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function consultarAlumnas(String $fecha): array {
+
+        /*
+        $objetoFecha = new DateTime($fecha);
+        $constructorConsultas = $this->createQueryBuilder("a");
+        $constructorConsultas
+            ->where("a.sexo = :paramSexo")
+            ->andWhere("a.fechanac > :paramFecha")
+            ->setParameter("paramSexo", 1)
+            ->setParameter("paramFecha", $objetoFecha)
+            ->orderBy('a.nombre', 'DESC');
+            
+        return $constructorConsultas->getQuery()->getResult();
+        */
+
+        return $this->createQueryBuilder("a")
+            ->where("a.sexo = :paramSexo")
+            ->andWhere("a.fechanac > :paramFecha")
+            ->setParameter("paramSexo", 1)
+            ->setParameter("paramFecha", new DateTime($fecha))
+            ->orderBy('a.nombre', 'DESC')
+            ->getQuery()->getResult();
     }
 }
