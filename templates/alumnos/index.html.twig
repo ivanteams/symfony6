@@ -11,6 +11,7 @@
 			<i class="fa-solid fa-check text-light btn btn-outline-success p-1"></i>
 		</h1>
 		<section>
+            {% if filasAlumnos is defined %}
 			<h2>Tabla Alumnos</h2>
 			<table class="table table-striped">
 				<thead>
@@ -35,7 +36,7 @@
 							<td>{{ alumno.nif }}</td>
 							<td>{{ alumno.nombre }}</td>
                             <td>{{ valorSexo }}</td>
-							<td>{{ alumno.num_aula }}</td>
+							<td>{{ alumno.numaula }}</td>
 							<td>{{ alumno.docente }}</td>
                             {# Hacemos una conversión para las fechas #}
                             <td>{{ alumno.fechanac|date('Y-m-d') }}</td>
@@ -43,6 +44,34 @@
 					{% endfor %}
 				</tbody>
 			</table>
+            {% endif %}
+
+
+            {% if RegistrosAlumnas is defined %}
+			<h2>Tabla Alumnas</h2>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>NIF</th>
+						<th>Nombre</th>
+						<th>edad</th>
+                        <th>Fecha Nacimiento</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					{% for alumna in RegistrosAlumnas %}
+						<tr>
+							<td>{{ alumna.nif }}</td>
+							<td>{{ alumna.nombre }}</td>
+							<td>{{ alumna.edad }}</td>
+                            {# Hacemos una conversión para las fechas #}
+                            <td>{{ alumna.fechanac|date('Y-m-d') }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+            {% endif %}
 		</section>
 	</main>
 {% endblock %}

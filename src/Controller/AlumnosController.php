@@ -159,7 +159,7 @@ class AlumnosController extends AbstractController
     public function consultarAlumnos(ManagerRegistry $gestorDoctrine): Response{
         $conexion = $gestorDoctrine->getConnection();
         $alumnos = $conexion
-            ->prepare("SELECT nif, nombre, sexo, num_aula, docente, fechanac
+            ->prepare("SELECT nif, nombre, sexo, num_aula AS numaula, docente, fechanac
                         FROM aulas 
                         JOIN alumnos
                         ON num_aula = aulas_num_aula")
@@ -193,4 +193,16 @@ class AlumnosController extends AbstractController
             'filasAlumnos' => $alumnos,
         ]);
     }
+
+    #[Route('/consultarAlumnas', name: 'app_alumnos_consultar_alumnas')]
+    public function consultarAlumnas(AlumnosRepository $repoAlumno): Response{
+
+        $alumnas = null;
+        return $this->render('alumnos/index.html.twig', [
+            'controller_name' => 'Controlador Alumnos',
+            'RegistrosAlumnas' => $alumnas,
+        ]);
+    }
+
+
 }
