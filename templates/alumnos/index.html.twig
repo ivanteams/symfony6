@@ -24,16 +24,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#{% set valorSexo = "Hombre" %} #}
+					
 					{% for alumno in filasAlumnos %}
-						{#{% if alumno.sexo %}#}
-						{#	{% set valorSexo = "Mujer" %}#}
-						{#{% endif %}#}
-
+						{% if alumno.sexo %}
+							{% set valorSexo = "Mujer" %}
+                        {% else %}
+                            {% set valorSexo = "Hombre" %}
+						{% endif %}
 						<tr>
 							<td>{{ alumno.nif }}</td>
 							<td>{{ alumno.nombre }}</td>
-                            <td>{{ alumno.sexo }}</td>
+                            <td>{{ valorSexo }}</td>
 							<td>{{ alumno.num_aula }}</td>
 							<td>{{ alumno.docente }}</td>
                             <td>{{ alumno.fechanac }}</td>
