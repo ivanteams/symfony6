@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Alumnos;
 use App\Entity\Aulas;
 use DateTime;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/alumnos', name: 'app_alumnos')]
@@ -144,5 +147,33 @@ class AlumnosController extends AbstractController
         }
 
         return new JsonResponse($json);
+    }
+
+    /**
+     * @todo Endpoint que saque JOIN entre Alumnos y Aulas (Num y docente)
+     * @todo Presentar datos en una tabla BS5 en twig
+     * JOIN a modo de José Antonio
+     */
+    #[Route('/consultarAlumnos', name: 'app_alumnos_consultar_alumnos')]
+    public function consultarAlumnos(ManagerRegistry $gestorDoctrine): Response{
+        $conexion = $gestorDoctrine->getConnection();
+        $alumnos = $conexion
+            ->prepare("SELECT nif, nombre, sexo, num_aula, docente, fechanac
+                        FROM aulas 
+                        JOIN alumnos
+                        ON num_aula = aulas_num_aula")
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        // Para probarlo, como dice JAVI el back ha hecho su trabajo
+        /*
+        $contenidoAlumnos = json_encode($alumnos);
+        return new Response($contenidoAlumnos); */
+
+        return $this->render('alumnos/index.html.twig', [
+            'controller_name' => 'Controlador Alumnos',
+            'filasAlumnos' => $alumnos,
+        ]);
+        
     }
 }
