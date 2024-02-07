@@ -11,6 +11,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * REANUDAR BBDD
+ * - En MySQL: DROP DATABASE soltel_liga;
+ * php bin/console doctrine:database:create
+ * php bin/console doctrine:migrations:migrate 
+ * 
+ * LISTADO ENDPOINTS
+ * http://127.0.0.1:8000/aulas/23/15/Iván Rodríguez/1
+ * http://127.0.0.1:8000/aulas/insertarAulas
+ * http://127.0.0.1:8000/alumnos/insertarAlumnos
+ * http://127.0.0.1:8000/alumnos/insertar/45612378K/Juan Carlos/22/0/2001-09-16/23
+ * http://127.0.0.1:8000/clubes/insertarClubes
+ * 
+ * SACAR LISTADO DE TABLAS
+ * php bin/console dbal:run-sql 'SELECT * FROM alumnos'
+ */
+
 #[Route('/aulas', name: 'app_aulas')]
 class AulasController extends AbstractController
 {

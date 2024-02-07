@@ -57,8 +57,8 @@ class AlumnosController extends AbstractController
         );
 
 
-
-        foreach ($otrosAlumnos as $registro) {
+        foreach ($alumnos as $registro) {
+        //foreach ($otrosAlumnos as $registro) {
             $alumno = new Alumnos();
             $alumno->setNif($registro['nif']);
             $alumno->setNombre($registro['nombre']);
@@ -72,8 +72,8 @@ class AlumnosController extends AbstractController
             $aula = $gestorEntidades->getRepository(Aulas::class)
                 ->findOneBy(["num_aula" => $registro['num_aula']]); */
 
-            $paramBusqueda = ["num_aula" => $registro['num_aula']];
             $repoAulas =  $gestorEntidades->getRepository(Aulas::class);
+            $paramBusqueda = ["num_aula" => $registro['num_aula']];
             $aula = $repoAulas->findOneBy($paramBusqueda);
 
             $alumno->setAulasNumAula($aula);
