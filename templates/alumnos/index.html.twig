@@ -37,7 +37,8 @@
                             <td>{{ valorSexo }}</td>
 							<td>{{ alumno.num_aula }}</td>
 							<td>{{ alumno.docente }}</td>
-                            <td>{{ alumno.fechanac }}</td>
+                            {# Hacemos una conversión para las fechas #}
+                            <td>{{ alumno.fechanac|date('Y-m-d') }}</td>
 						</tr>
 					{% endfor %}
 				</tbody>

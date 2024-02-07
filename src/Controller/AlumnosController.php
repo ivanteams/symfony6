@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\AlumnosRepository;
 
 #[Route('/alumnos', name: 'app_alumnos')]
 class AlumnosController extends AbstractController
@@ -175,5 +176,21 @@ class AlumnosController extends AbstractController
             'filasAlumnos' => $alumnos,
         ]);
         
+    }
+
+    /**
+     * @todo crear método en el repositorio para hacer el JOIN
+     * @todo Endpoint que saque JOIN entre Alumnos y Aulas (Num y docente)
+     * @todo Presentar datos en una tabla BS5 en twig
+     */
+    #[Route('/consultarAlumnosAulas', name: 'app_alumnos_consultar_alumnos_aulas')]
+    public function consultarAlumnosAulas(AlumnosRepository $repoAlumno): Response{
+
+        $alumnos = $repoAlumno->unirAlumnosAulas();
+
+        return $this->render('alumnos/index.html.twig', [
+            'controller_name' => 'Controlador Alumnos',
+            'filasAlumnos' => $alumnos,
+        ]);
     }
 }

@@ -45,4 +45,19 @@ class AlumnosRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    /**
+     * Definimos un método para hacer el JOIN en el repositorio
+     * 
+     */
+    public function unirAlumnosAulas(): array {
+        return $this->createQueryBuilder('a')
+            ->innerJoin("a.aulas_num_aula", "alu")  // alu ES UN ALIAS!!
+            ->select("a.nif", "a.nombre", "a.sexo", "a.fechanac",  
+                "alu.docente","alu.num_aula" )
+            ->orderBy('a.nombre', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
