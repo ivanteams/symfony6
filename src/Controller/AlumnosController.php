@@ -207,4 +207,18 @@ class AlumnosController extends AbstractController
             'RegistrosAlumnas' => $alumnas,
         ]);
     }
+
+    #[Route('/borrarAlumno/{nif}', name: 'borrar_alumno')]
+    public function borrarAlumno(
+        AlumnosRepository $repoAlumno,
+        EntityManagerInterface $gestorEntidades,
+        String $nif
+    ): Response {
+        // Ejemplo endpoint: http://127.0.0.1:8000/alumnos/borrarAlumno/45612378K -> Juan Carlos OUT!
+
+        $alumno = $repoAlumno->findOneBy(["nif" => $nif]);
+        $gestorEntidades->remove($alumno);
+        $gestorEntidades->flush();
+        return $this->redirectToRoute("app_alumnos_consultar_alumnos_aulas");
+    }
 }
