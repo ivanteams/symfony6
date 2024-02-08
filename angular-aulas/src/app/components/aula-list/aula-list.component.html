@@ -1,0 +1,18 @@
+<!-- APLICACIÓN AULAS -->
+<!-- src/app/components/aula-list/aula-list.component.html -->
+
+<h2>Listado de Aulas</h2>
+<table class="table">
+  <tr>
+    <th>Número de Aula</th>
+    <th>Capacidad</th>
+    <th>Docente</th>
+    <th>Hardware</th>
+  </tr>
+  <tr *ngFor="let aula of aulas">
+    <td>{{ aula.numAula }}</td>
+    <td>{{ aula.capacidad }}</td>
+    <td>{{ aula.docente }}</td>
+    <td>{{ aula.hardware ? 'Sí' : 'No' }}</td>
+  </tr>
+</table>

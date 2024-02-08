@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 // Importamos clases abstractas de gestión BBDD
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * REANUDAR BBDD
@@ -99,8 +100,9 @@ class AulasController extends AbstractController
         return new Response("<h1>Registros Insertados. </h1>");
     }
 
+    // APLICACIÓN AULAS
     #[Route('/consultarAulas', name: 'consultarAulas')]
-    public function consultarAulas(ManagerRegistry $gestorFilas): Response
+    public function consultarAulas(ManagerRegistry $gestorFilas): JsonResponse
     {
         // endpoint de ejemplo: http://127.0.0.1:8000/aulas/consultarAulas
         // Saco el gestor de entidades a partir del gestor de Filas (mas genérico)
@@ -108,6 +110,20 @@ class AulasController extends AbstractController
         // Desde el gestor de entidades, saco el repositorio de mi clase
         $repoAulas =  $gestorEntidades->getRepository(Aulas::class);
         $filasAulas = $repoAulas->findAll();
+
+
+        $json = array();
+        foreach ($filasAulas as $aula) {
+            $json[] = array(
+                'numAula' => $aula->getNumAula(),
+                'capacidad' => $aula->getCapacidad(),
+                'docente' => $aula->getDocente(),
+                'hardware' => $aula->isHardware(),
+            );
+        }
+
+        return new JsonResponse($json);
+
 
         return $this->render('aulas/index.html.twig', [
             'controller_name' => 'Controlador Aulas',

@@ -125,7 +125,6 @@ class AlumnosController extends AbstractController
         return new Response("<h1>Insertado Alumnado</h1>");
     }
 
-
     #[Route('/verAlumnos/{aula}/{sexo}', name: 'ver_alumnos')]
     public function verAlumnos(
         EntityManagerInterface $gestorEntidades,
