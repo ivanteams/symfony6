@@ -15,10 +15,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\AlumnosRepository;
 
-#[Route('/alumnos', name: 'app_alumnos')]
+#[Route('/alumnos', name: 'app_alumnos_')]
 class AlumnosController extends AbstractController
 {
-    #[Route('/insertarAlumnos', name: 'app_alumnos_insertar1')]
+    #[Route('/insertarAlumnos', name: 'insertar1')]
     public function index(EntityManagerInterface $gestorEntidades): Response
     {
         // endpoint de ejemplo: http://127.0.0.1:8000/alumnos/insertarAlumnos
@@ -62,7 +62,7 @@ class AlumnosController extends AbstractController
 
 
         foreach ($alumnos as $registro) {
-        //foreach ($otrosAlumnos as $registro) {
+            //foreach ($otrosAlumnos as $registro) {
             $alumno = new Alumnos();
             $alumno->setNif($registro['nif']);
             $alumno->setNombre($registro['nombre']);
@@ -90,7 +90,7 @@ class AlumnosController extends AbstractController
     }
 
 
-    #[Route('/insertar/{nif}/{nombre}/{edad}/{sexo}/{fechanac}/{numAula}', name: 'app_insertar2')]
+    #[Route('/insertar/{nif}/{nombre}/{edad}/{sexo}/{fechanac}/{numAula}', name: 'insertar2')]
     public function meteAlumno(
         String $nif,
         String $nombre,
@@ -126,7 +126,7 @@ class AlumnosController extends AbstractController
     }
 
 
-    #[Route('/verAlumnos/{aula}/{sexo}', name: 'app_alumnos_ver_alumnos')]
+    #[Route('/verAlumnos/{aula}/{sexo}', name: 'ver_alumnos')]
     public function verAlumnos(
         EntityManagerInterface $gestorEntidades,
         int $aula,
@@ -155,8 +155,9 @@ class AlumnosController extends AbstractController
      * @todo Presentar datos en una tabla BS5 en twig
      * JOIN a modo de José Antonio
      */
-    #[Route('/consultarAlumnos', name: 'app_alumnos_consultar_alumnos')]
-    public function consultarAlumnos(ManagerRegistry $gestorDoctrine): Response{
+    #[Route('/consultarAlumnos', name: 'consultar_alumnos')]
+    public function consultarAlumnos(ManagerRegistry $gestorDoctrine): Response
+    {
         // Ejemplo endpoint: http://127.0.0.1:8000/alumnos/consultarAlumnos
         $conexion = $gestorDoctrine->getConnection();
         $alumnos = $conexion
@@ -176,7 +177,6 @@ class AlumnosController extends AbstractController
             'controller_name' => 'Controlador Alumnos',
             'filasAlumnos' => $alumnos,
         ]);
-        
     }
 
     /**
@@ -184,8 +184,9 @@ class AlumnosController extends AbstractController
      * @todo Endpoint que saque JOIN entre Alumnos y Aulas (Num y docente)
      * @todo Presentar datos en una tabla BS5 en twig
      */
-    #[Route('/consultarAlumnosAulas', name: 'app_alumnos_consultar_alumnos_aulas')]
-    public function consultarAlumnosAulas(AlumnosRepository $repoAlumno): Response{
+    #[Route('/consultarAlumnosAulas', name: 'consultar_alumnos_aulas')]
+    public function consultarAlumnosAulas(AlumnosRepository $repoAlumno): Response
+    {
         // Ejemplo endpoint: http://127.0.0.1:8000/alumnos/consultarAlumnosAulas
         $alumnos = $repoAlumno->unirAlumnosAulas();
 
@@ -195,8 +196,9 @@ class AlumnosController extends AbstractController
         ]);
     }
 
-    #[Route('/consultarAlumnas/{fecha}', name: 'app_alumnos_consultar_alumnas')]
-    public function consultarAlumnas(AlumnosRepository $repoAlumno, String $fecha): Response{
+    #[Route('/consultarAlumnas/{fecha}', name: 'consultar_alumnas')]
+    public function consultarAlumnas(AlumnosRepository $repoAlumno, String $fecha): Response
+    {
         // Ejemplo endpoint: http://127.0.0.1:8000/alumnos/consultarAlumnas/1990-02-07
         $alumnas = $repoAlumno->consultarAlumnas($fecha);
 
@@ -205,6 +207,4 @@ class AlumnosController extends AbstractController
             'RegistrosAlumnas' => $alumnas,
         ]);
     }
-
-
 }

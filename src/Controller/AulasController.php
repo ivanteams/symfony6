@@ -28,10 +28,10 @@ use Doctrine\Persistence\ManagerRegistry;
  * php bin/console dbal:run-sql 'SELECT * FROM alumnos'
  */
 
-#[Route('/aulas', name: 'app_aulas')]
+#[Route('/aulas', name: 'app_aulas_')]
 class AulasController extends AbstractController
 {
-    #[Route('/{numAula}/{capacidad}/{docente}/{hardware}', name: 'app_aulas_insertarAula')]
+    #[Route('/{numAula}/{capacidad}/{docente}/{hardware}', name: 'insertarAula')]
     public function index(
         int $numAula,
         int $capacidad,
@@ -61,7 +61,7 @@ class AulasController extends AbstractController
         */
     }
 
-    #[Route('/insertarAulas', name: 'app_aulas_insertarAulas')]
+    #[Route('/insertarAulas', name: 'insertarAulas')]
     public function insertarAulas(ManagerRegistry $gestorFilas): Response
     {
         // endpoint de ejemplo: http://127.0.0.1:8000/aulas/insertarAulas
@@ -99,7 +99,7 @@ class AulasController extends AbstractController
         return new Response("<h1>Registros Insertados. </h1>");
     }
 
-    #[Route('/consultarAulas', name: 'app_aulas_consultarAulas')]
+    #[Route('/consultarAulas', name: 'consultarAulas')]
     public function consultarAulas(ManagerRegistry $gestorFilas): Response
     {
         // endpoint de ejemplo: http://127.0.0.1:8000/aulas/consultarAulas
@@ -113,5 +113,15 @@ class AulasController extends AbstractController
             'controller_name' => 'Controlador Aulas',
             'tabla' => $filasAulas,
         ]);
+    }
+
+
+    #[Route('/actualizarAula/{numAula}/{capacidad}/{docente}/{hardware}', name: 'actualizarAula')]
+    public function actualizarAula(ManagerRegistry $gestorFilas): Response
+    {
+        // endpoint de ejemplo: http://127.0.0.1:8000/aulas/actualizarAula/21/1/Isabel Álvarez Sánchez/1
+
+        // Redirección entre endpoints. Usamos redirectToRoute -> Poner EL NOMBRE no la ruta
+        return $this->redirectToRoute("app_aulas_consultarAulas");
     }
 }

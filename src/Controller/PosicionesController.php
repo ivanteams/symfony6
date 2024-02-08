@@ -10,11 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 // Importamos clases abstractas de gestión BBDD
 use Doctrine\Persistence\ManagerRegistry;
 
-#[Route('/posiciones', name: 'app_posiciones')]
+#[Route('/posiciones', name: 'app_posiciones_')]
 class PosicionesController extends AbstractController
 {
 
-    #[Route('/insertarPosiciones', name: 'app_insertarPosiciones')]
+    #[Route('/insertarPosiciones', name: 'insertarPosiciones')]
     public function index(ManagerRegistry $gestorFilas): Response
     {
         // endpoint de ejemplo: http://127.0.0.1:8000/posiciones/insertarPosiciones
