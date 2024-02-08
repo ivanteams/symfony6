@@ -117,11 +117,35 @@ class AulasController extends AbstractController
 
 
     #[Route('/actualizarAula/{numAula}/{capacidad}/{docente}/{hardware}', name: 'actualizarAula')]
-    public function actualizarAula(ManagerRegistry $gestorFilas): Response
-    {
+    public function actualizarAula(
+        ManagerRegistry $gestorFilas,
+        $numAula,
+        $capacidad,
+        $docente,
+        $hardware
+    ): Response {
         // endpoint de ejemplo: http://127.0.0.1:8000/aulas/actualizarAula/21/1/Isabel Álvarez Sánchez/1
 
-        // Redirección entre endpoints. Usamos redirectToRoute -> Poner EL NOMBRE no la ruta
-        return $this->redirectToRoute("app_aulas_consultarAulas");
+        /* Modo virguero
+        $gestorEntidades = $gestorFilas->getManager();
+        $aula = $gestorEntidades->getRepository(Aulas::class)->findOneBy(["num_aula" => $numAula]); */
+
+        $gestorEntidades = $gestorFilas->getManager();
+        $repoAulas = $gestorEntidades->getRepository(Aulas::class);
+        $arrayCriterios = ["num_aula" => $numAula];
+        $aula = $repoAulas->findOneBy($arrayCriterios);
+
+        if (!$aula) {
+            return new Response("<p style='color:red; font-weight: bold'>NO existe Aula con número $numAula</p>");
+        } else {
+            // Procedemos con la actualización
+            $aula->setCapacidad($capacidad);
+            $aula->setDocente($docente);
+            $aula->setHardware($hardware);
+            $gestorEntidades->flush();
+
+            // Redirección entre endpoints. Usamos redirectToRoute -> Poner EL NOMBRE no la ruta
+            return $this->redirectToRoute("app_aulas_consultarAulas");
+        }
     }
 }
