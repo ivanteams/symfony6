@@ -1,3 +1,5 @@
+# config/packages/nelmio_cors.yaml
+
 nelmio_cors:
     defaults:
         origin_regex: true
